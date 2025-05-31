@@ -1,9 +1,28 @@
+import { AllImages } from "./images/AllImages.tsx";
+import { ImageDetails } from "./images/ImageDetails.tsx";
+import { UploadPage } from "./UploadPage.tsx";
+import { LoginPage } from "./LoginPage.tsx";
+import { MainLayout } from "./MainLayout.tsx";
+import { Routes, Route } from "react-router";
+import { useState } from "react";
+import { fetchDataFromServer } from "./MockAppData.ts";
+import { ValidRoutes } from "../../backend/src/shared/ValidRoutes.ts";
+
 function App() {
-    return (
-        <div>
-            <h1>My cool webpage</h1>
-        </div>
-    );
+  const [imageData, _setImageData] = useState(fetchDataFromServer);
+  return (
+    <Routes>
+      {/* MainLayout wraps the following routes */}
+      <Route element={<MainLayout />}>
+        <Route path={ValidRoutes.HOME} element={<AllImages imageData={imageData}/>} />
+        <Route path={ValidRoutes.IMAGES} element={<ImageDetails imageData={imageData}/>} />
+        <Route path={ValidRoutes.UPLOAD} element={<UploadPage />} />
+        <Route path={ValidRoutes.LOGIN} element={<LoginPage />} />
+      </Route>
+
+      {/* Login page doesn't need header/layout */}
+    </Routes>
+  );
 }
 
 export default App;
