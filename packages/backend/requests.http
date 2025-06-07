@@ -1,7 +1,7 @@
 ### Get all images
 # This is a comment
 GET http://localhost:3000/api/images
-
+Authorization: Bearer <token string from /auth/login>
 ### A second example.  Each request must be delimited by a triple hash
 POST http://localhost:3000/api/test
 Content-Type: application/json # Content-Type header is a must if you're sending JSON
@@ -12,6 +12,43 @@ Content-Type: application/json # Content-Type header is a must if you're sending
 ### filtered search
 GET http://localhost:3000/api/images?name=shiba
 
+### new name
+PUT http://localhost:3000/api/images/683aa13444fb22ecaca12eeb/name
+Content-Type: application/json # Content-Type header is a must if you're sending JSON
+{
+  "newName": "HELLO"
+}
 
+### New user registration
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{ "username": "newuser", "password": "password" }
+
+### Register new user
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "password": "password"
+}
+
+### Missing field
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "username": "bob"
+}
+
+### Duplicate user
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "password": "password"
+}
 
 

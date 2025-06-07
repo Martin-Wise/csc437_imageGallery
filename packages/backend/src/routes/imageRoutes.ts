@@ -32,6 +32,7 @@ export function registerImageRoutes(app: express.Application, imageProvider: Ima
     app.put("/api/images/:id/name", async (req: Request, res: Response) => {
         const imageId = req.params.id;
         const { newName } = req.body;
+        const username = req.user?.username;
     
         if (!newName || typeof newName !== "string") {
             res.status(400).json({ error: "Invalid or missing 'newName' in request body." });
@@ -54,7 +55,12 @@ export function registerImageRoutes(app: express.Application, imageProvider: Ima
         try {
             await mongoClient.connect(); // Ensure DB connection
             const result = await imageProvider.updateImageName(imageId, newName);
-    
+            const image = await imageProvider.getImageById(imageId);    
+            if (image?.authorId !== username) {
+                console.log(image?.authorId);
+                console.log(username);
+                res.status(403).json({ error: "Forbidden: You are not the owner of this image" });
+            }
             if (result.modifiedCount === 0) {
                 res.status(404).send({
                     error: "Not Found",

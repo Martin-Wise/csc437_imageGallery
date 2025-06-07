@@ -70,6 +70,10 @@ export class ImageProvider {
         { $set: { name: newName } }
     );
   }
+
+  async getImageById(imageId: string) {
+    return await this.collection.findOne({ id: imageId });
+}
 }
 
 

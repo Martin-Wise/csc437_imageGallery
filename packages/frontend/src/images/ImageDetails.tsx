@@ -1,5 +1,5 @@
 import { useParams } from 'react-router'
-import { ImageNameEditor } from '../ImageNameEditor';
+import { ImageNameEditor } from './ImageNameEditor';
 
 interface IImageDetailsProps {
     imageData: any[];

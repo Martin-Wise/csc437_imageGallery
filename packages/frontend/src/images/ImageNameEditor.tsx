@@ -21,7 +21,7 @@ export function ImageNameEditor({ initialValue, imageId, onNameChange }: INameEd
                 throw new Error("Failed to fetch image data.");
             }
 
-            // Pretend success updates the name
+            
             onNameChange(imageId, input);
             setIsEditingName(false);
         } catch (err) {
