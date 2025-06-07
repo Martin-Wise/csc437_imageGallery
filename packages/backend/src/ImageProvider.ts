@@ -1,7 +1,7 @@
-import { Collection, MongoClient, ObjectId } from "mongodb";
+import { Collection, MongoClient, ObjectId, UpdateResult } from "mongodb";
 
 interface IImageDocument {
-  _id: string;          // Mongo _id field as string
+  _id: ObjectId;          // Mongo _id field as string
   src: string;
   name: string;
   authorId: string;     // stored as string but refers to ObjectId in users
@@ -63,4 +63,13 @@ export class ImageProvider {
     return this.collection.aggregate<IApiImageData>(pipeline).toArray();
   }
   
+  async updateImageName(imageId: string, newName: string): Promise<UpdateResult> {
+
+    return this.collection.updateOne(
+        { _id: new ObjectId(imageId) },
+        { $set: { name: newName } }
+    );
+  }
 }
+
+
